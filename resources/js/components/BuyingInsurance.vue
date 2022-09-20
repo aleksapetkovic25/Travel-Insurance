@@ -203,11 +203,6 @@ export default {
         }
     },
     methods:{
-        getUser(){
-            axios.get('/api/get/user').then((res)=>{
-                console.log(res)
-            })
-        },
         checkValidatoin(){
             this.errorsBack = {};
             this.validation = true;
@@ -348,9 +343,6 @@ export default {
         deleteParticipant(usr){
             this.participants.splice(usr,1);
         }
-    },
-    mounted(){
-        this.getUser();
     }
 }
 </script>
@@ -374,7 +366,7 @@ export default {
     background-color: #5b4a3b4f;
 }
 .form{
-    padding: 150px 0;
+    padding: 60px 0 0;
     margin: 0 auto;
     width: 1170px;
     color: #fff;

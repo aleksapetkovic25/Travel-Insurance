@@ -13,6 +13,9 @@ import Admin from './admin/Admin';
 import AdminInsurance from './admin/AdminInsurance.vue';
 import Login from './components/Login.vue';
 import Registration from './components/Registration.vue';
+import Footer from './components/Footer.vue';
+import CreateBlog from './components/CreateBlog.vue';
+
 
 
 
@@ -28,5 +31,7 @@ app.component('vue-admin', Admin);
 app.component('admin-insurance', AdminInsurance);
 app.component('login', Login);
 app.component('vue-registration', Registration);
+app.component('vue-footer', Footer);
+app.component('create-blog', CreateBlog);
 
 app.mount('#app');

@@ -18,8 +18,12 @@ class UserController extends Controller
         return $user->login($request);
     }
 
+    public function logout(Request $request){
+        $user = new User();
+        return $user->logout($request);
+    }
+
     public function getUser(Request $request){
-        dd(Session::get('user'));
-        return ['sesija' => session('user')];
+        return session('loginUser');
     }
 }

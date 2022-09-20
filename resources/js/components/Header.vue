@@ -36,36 +36,24 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Blog Page</a>
         </li>
-        <li class="nav-item me-3 me-lg-0 dropdown">
-            <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
-            >
-            Admin
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                    <a class="dropdown-item" href="/insurances">Insurances</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">Blog</a>
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                    <a class="dropdown-item" href="/registration">Registration</a>
-                </li>
-            </ul>
+        <li v-if="user" class="nav-link">
+          <div class="dropdown" v-if="user">
+            <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Admin
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/insurances">Insurances</a>
+              <a class="dropdown-item" href="#">Create Blog/News</a>
+              <a class="dropdown-item" href="/registration">Registration</a>
+            </div>
+          </div>
         </li>
       </ul>
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <a href="" class="btn btn-link px-3 me-2" data-toggle="modal" data-target="#modalLoginForm">Login</a>
-        
+        <a v-if="!user" href="" class="btn btn-link px-3 me-2" data-toggle="modal" data-target="#modalLoginForm">Login</a>
+        <button @click="logout" v-if="user" class="nav-link btn btn-danger">Logout</button>
         <a
           class="btn btn-dark px-3"
           href="https://github.com/aleksapetkovic25"
@@ -77,7 +65,7 @@
     <!-- Collapsible wrapper -->
   </div>
   <!-- Container wrapper -->
-  <login></login>
+  <login @user="loggedUser"></login>
 </nav>    
 </template>
 
@@ -87,6 +75,24 @@ export default {
     return{
       user: null
     }
+  },
+  methods:{
+    logout(){
+      axios.get('/logout').then((res)=>{
+        this.user = res.data;
+      })
+    },
+    loggedUser(user){
+      console.log('asd',user)
+      alert(user.message)
+      this.user = user.user;
+    }
+  },
+  mounted(){
+    axios.get('/checkuserlogged').then((res)=>{
+      this.user = res.data;
+      console.log('header',this.user)
+    })
   }
 }
 </script>
@@ -94,5 +100,8 @@ export default {
 <style scoped>
 .navbar{
     background-color: black;
+}
+.d-flex{
+  margin-left: auto;
 }
 </style>

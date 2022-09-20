@@ -29,6 +29,7 @@
         <div id="app">
             <vue-header></vue-header>
             @yield('content');
+            <vue-footer></vue-footer>
         </div>
         <script src="{{asset('js/app.js')}}"></script>
     </body>

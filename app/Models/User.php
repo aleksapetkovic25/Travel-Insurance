@@ -55,15 +55,18 @@ class User extends Authenticatable
 
         $formFields['password'] = Hash::make($formFields['password'], ['rounds' => 10]);
 
-        $newUser = DB::table('users')
-            ->insert([
-                'name' => $formFields['name'],
-                'email' => $formFields['email'],
-                'password' => $formFields['password'],
-                'level' => 1,
-            ]);
+        // $newUser = DB::table('users')
+        //     ->insert([
+        //         'name' => $formFields['name'],
+        //         'email' => $formFields['email'],
+        //         'password' => $formFields['password'],
+        //         'level' => 1,
+        //     ]);
+        
+        $user = User::create($formFields);
 
-        return $newUser;
+
+        return $user;
     }
 
     public function login($request){
@@ -72,18 +75,28 @@ class User extends Authenticatable
             'password' => 'required'
         ]);
 
-        $user = DB::table('users')
-        ->where('email', $request->email)
-        ->first();
+        // $user = DB::table('users')
+        // ->where('email', $request->email)
+        // ->first();
 
-        if(Hash::check($request->password, $user->password)){
-            Session::put('user', $user);
-            
-            return session('user');
+        $user = User::where('email', '=', $request->email)->first();
+
+        if($user){
+            if(Hash::check($request->password, $user->password)){
+                $request->session()->put('loginUser', ['id'=>$user->id,'email'=>$user->email,'name'=>$user->name]);
+                return ['user' => $user, 'message' => 'Welcome'];
+            }else{
+                return ['user' => null,'message' => 'Password is not matches.'];
+            }
+        }else{
+            return ['user' => null,'message' => 'This email is not registrated'];
         }
-
-
-        return ['message' => 'Invalid email or password.'];
     }
 
+    public function logout(){
+        if(Session::has('loginUser')){
+            Session::pull('loginUser');
+            return Session::has('loginUser');
+        }
+    }
 }

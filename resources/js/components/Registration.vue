@@ -137,6 +137,12 @@ export default {
         password: this.password,
         confirmPassword: this.confirmPassword
       }).then((res)=>{
+        if(res.status === 200){
+          this.name = ''
+          this.email = ''
+          this.password = ''
+          this.confirmPassword = ''
+        }
         console.log(res)
       }).catch((error)=>{
         if(error.response.status == 422){
@@ -148,11 +154,6 @@ export default {
         console.log(err.response.status)
       })
     }
-  },
-  mounted(){
-    axios.get('/api/get/user').then((res)=>{
-        console.log(res)
-    })
   }
 }
 </script>

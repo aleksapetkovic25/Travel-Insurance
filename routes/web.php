@@ -25,13 +25,19 @@ Route::get('/', function () {
 
 Route::get('/insurances', function(){
     return view('admin');
-});
+})->middleware('isLoggedIn');
 
 Route::get('/registration', function(){
     return view('registration');
-});
+})->middleware('isLoggedIn');
+
+Route::get('/create', function(){
+    return view('create');
+})->middleware('isLoggedIn');
 
 Route::post('/login', [UserController::class, 'login']);
+
+Route::get('/logout', [UserController::class, 'logout']);
 Route::get('/get/user', [UserController::class, 'getUser']);
 
 Route::get('/checkuserlogged', [UserController::class, 'getUser']);

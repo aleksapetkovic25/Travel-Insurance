@@ -13,12 +13,11 @@ class Insurance extends Model
 
      public function addInsurance($request){
 
-
         $formFields = $request->validate([
-            'carrier.name' => 'required|max:255',
-            'carrier.lastname' => 'required|max:255',
-            'carrier.number' => 'required',
-            'carrier.dateOfBirth' => 'required',
+            'nameCarrier' => 'required|max:255',
+            'lastnameCarrier' => 'required|max:255',
+            'numberCarrier' => 'required',
+            'dateOfBirthCarrier' => 'required',
             'startDate' => 'required',
             'endDate' => 'required',
             'type' => 'required',
@@ -34,10 +33,10 @@ class Insurance extends Model
         $newInsurance = DB::table('insurances')
         ->insertGetId([
             'type' => $request->type,
-            'usr_name' =>$request->carrier['name'], 
-            'usr_lastname' =>$request->carrier['lastname'], 
-            'phone' =>$request->carrier['number'], 
-            'date_birth' =>date('Y-m-d',strtotime($request->carrier['dateOfBirth'])), 
+            'usr_name' =>$request->nameCarrier, 
+            'usr_lastname' =>$request->lastnameCarrier, 
+            'phone' =>$request->numberCarrier, 
+            'date_birth' =>date('Y-m-d',strtotime($request->dateOfBirt)), 
             'start_date' =>date('Y-m-d',strtotime($request->startDate)), 
             'end_date' =>date('Y-m-d',strtotime($request->endDate))
         ]);
@@ -56,6 +55,6 @@ class Insurance extends Model
         }
 
 
-        return ['message' => 'Successful registration'];
+        return ['message' => 'Sccessful'];
     }
 }

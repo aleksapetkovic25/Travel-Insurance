@@ -1,5 +1,5 @@
 <template>
-    <BuyingInsurance/>
+    <BuyingInsurance></BuyingInsurance>
 </template>
 
 <script>

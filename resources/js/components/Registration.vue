@@ -93,6 +93,24 @@ export default {
     }
   },
   methods:{
+    toastPopUp(title){
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+      });
+
+      Toast.fire({
+          icon: 'success',
+          title: title
+      });
+    },
     checkValidation(){
       this.validate = true;
 
@@ -116,7 +134,6 @@ export default {
         this.errors.confirmPassword = "Passwords don't matching"
       }
 
-  console.log(this.errors)
       for(let item in this.errors){
         if(this.errors[item]){
           this.validate = false;
@@ -137,13 +154,17 @@ export default {
         password: this.password,
         confirmPassword: this.confirmPassword
       }).then((res)=>{
+        this.toastPopUp('Successful registration.')
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+        
         if(res.status === 200){
           this.name = ''
           this.email = ''
           this.password = ''
           this.confirmPassword = ''
         }
-        console.log(res)
       }).catch((error)=>{
         if(error.response.status == 422){
           let err = error.response.data.errors

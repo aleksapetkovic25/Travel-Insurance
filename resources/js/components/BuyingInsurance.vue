@@ -108,7 +108,6 @@
                             <button v-if="form.type==='1'" @click="addParticipant" class="btn btn-secondary">Add Participant</button>
                             <button @click="addInsurance" class="btn btn-primary">Confirm</button>
                         </div>
-                        <p class="successful" :class="{'show-successful': successful}">You have successful added!</p>
                     </div>
                 </div>
                 
@@ -199,10 +198,27 @@ export default {
             validation: true,
             validationOther: true,
             participants: [],
-            successful: false
         }
     },
     methods:{
+        toastPopUp(title){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: title
+            });
+        },
         checkValidatoin(){
             this.errorsBack = {};
             this.validation = true;
@@ -233,7 +249,7 @@ export default {
                 this.errors.number = "Invalid format. You must enter in number format.";
             }
             if(this.form.startDate == null){
-                this.errors.startDate = "You must choose a start date";
+                this.errors.startDate = "You must select a start date";
             }
             if(this.form.endDate == null){
                 this.errors.endDate = "You must select an end date";
@@ -278,11 +294,15 @@ export default {
                 type: this.form.type,
                 startDate: this.form.startDate,
                 endDate: this.form.endDate,
-                carrier: this.participants[0]
+                nameCarrier: this.form.name,
+                lastnameCarrier: this.form.lastname,
+                dateOfBirthCarrier: this.form.dateOfBirth,
+                numberCarrier: this.form.number
             }).then((res)=> {
                 console.log(res)
                 if(res.status === 200){
-                    this.successful = true;
+                    this.toastPopUp('Successfully ordered insurance.')
+                    this.type = '0';
                     this.form.name = '';
                     this.form.lastname = '';
                     this.form.number = '';
@@ -290,9 +310,6 @@ export default {
                     this.form.startDate = null;
                     this.form.endDate = null;
                     this.participants = [];
-                    setTimeout(() => {
-                        this.successful = false;
-                    }, 1500);
                 }
             }).catch((error)=> {
                 if(error.response.status == 422){
@@ -330,6 +347,7 @@ export default {
                 return;
             }
             
+            this.toastPopUp('Successfully adding participants');
 
             this.participants.push({
                 name: this.otherParticipants.name,
@@ -341,7 +359,19 @@ export default {
             this.otherParticipants.dateOfBirth = null;
         },
         deleteParticipant(usr){
-            this.participants.splice(usr,1);
+            this.$swal({
+                title: 'Are you sure?',
+                text: "Do you want to delete this participant!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, publish it!'
+            }).then((res) => {
+                if(res.isConfirmed){
+                    this.participants.splice(usr,1);
+                }
+            });
         }
     }
 }
@@ -401,14 +431,5 @@ export default {
 
 .participants{
     margin-top: 50px;
-}
-.successful{
-    color: rgb(2, 177, 2);
-    font-size: 20px;
-    opacity: 0;
-    transition: 1s all ease;
-}
-.show-successful{
-    opacity: 1;
 }
 </style>

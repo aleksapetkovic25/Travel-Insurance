@@ -28,7 +28,7 @@
     <body class="antialiased">
         <div id="app">
             <vue-header></vue-header>
-            @yield('content');
+            @yield('content')
             <vue-footer></vue-footer>
         </div>
         <script src="{{asset('js/app.js')}}"></script>

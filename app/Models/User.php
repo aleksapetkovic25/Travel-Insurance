@@ -55,18 +55,18 @@ class User extends Authenticatable
 
         $formFields['password'] = Hash::make($formFields['password'], ['rounds' => 10]);
 
-        // $newUser = DB::table('users')
-        //     ->insert([
-        //         'name' => $formFields['name'],
-        //         'email' => $formFields['email'],
-        //         'password' => $formFields['password'],
-        //         'level' => 1,
-        //     ]);
+        $newUser = DB::table('users')
+            ->insert([
+                'name' => $formFields['name'],
+                'email' => $formFields['email'],
+                'password' => $formFields['password'],
+                'level' => 1,
+            ]);
         
-        $user = User::create($formFields);
+        // $user = User::create($formFields);
 
 
-        return $user;
+        return $newUser;
     }
 
     public function login($request){

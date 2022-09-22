@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BlogController;
 
 
 /*
@@ -34,6 +35,30 @@ Route::get('/registration', function(){
 Route::get('/create', function(){
     return view('create');
 })->middleware('isLoggedIn');
+
+Route::get('/edit/post/{id}', [BlogController::class, 'editPost'])
+->middleware('isLoggedIn');
+
+Route::delete('/delete/post/{id}', [BlogController::class, 'deletePost']);
+
+Route::put('/archive/post/{id}', [BlogController::class, 'archivePost']);
+Route::put('/publish/post/{id}', [BlogController::class, 'publishPost']);
+
+
+
+Route::get('/posts', [UserController::class, 'postListGetUser']);
+
+
+//Get posts
+Route::get('/api/posts', [BlogController::class, 'fetchPosts']);
+
+Route::get('/posts/{id}', [BlogController::class, 'fetchPost']);
+
+
+
+
+Route::post('/create', [BlogController::class, 'createBlog']);
+
 
 Route::post('/login', [UserController::class, 'login']);
 

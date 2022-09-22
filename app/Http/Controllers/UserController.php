@@ -26,4 +26,8 @@ class UserController extends Controller
     public function getUser(Request $request){
         return session('loginUser');
     }
+
+    public function postListGetUser(Request $request){
+        return view('postList', ['user' => session('loginUser')]);
+    }
 }

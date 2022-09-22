@@ -1,18 +1,19 @@
 <template>
 <nav class="navbar navbar-expand-lg">
   <!-- Container wrapper -->
-  <div class="container">
+  <div class="container-fluid">
     <!-- Navbar brand -->
     <a class="navbar-brand me-2" href="https://mdbgo.com/">
       <img
-        src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
+        src="/assets/logo.png"
         height="16"
         alt="MDB Logo"
         loading="lazy"
         style="margin-top: -1px;"
+        class="logo"
       />
     </a>
-
+    <div class="vr"></div>
     <!-- Toggle button -->
     <button
       class="navbar-toggler"
@@ -34,7 +35,7 @@
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Blog Page</a>
+          <a class="nav-link" href="/posts">Blog Page</a>
         </li>
         <li v-if="user" class="nav-link">
           <div class="dropdown" v-if="user">
@@ -43,7 +44,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="/insurances">Insurances</a>
-              <a class="dropdown-item" href="#">Create Blog/News</a>
+              <a class="dropdown-item" href="/create">Create Blog/News</a>
               <a class="dropdown-item" href="/registration">Registration</a>
             </div>
           </div>
@@ -80,6 +81,7 @@ export default {
     logout(){
       axios.get('/logout').then((res)=>{
         this.user = res.data;
+        window.location.href = '/';
       })
     },
     loggedUser(user){
@@ -103,5 +105,28 @@ export default {
 }
 .d-flex{
   margin-left: auto;
+}
+.logo{
+  width: 150px;
+  height: auto;
+}
+.nav-link{
+  color: white;
+}
+.dropdown-toggle{
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 0;
+}
+.vr{
+  height: 40px;
+  width: 1px;
+  background-color: white;
+  margin: 0 15px 0 0;
+}
+.nav-link.btn.btn-danger{
+  padding: 5px 10px;
+  margin-right: 5px;
 }
 </style>

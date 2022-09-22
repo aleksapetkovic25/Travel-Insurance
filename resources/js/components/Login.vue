@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import swal from 'sweetalert2';
+window.Swal = swal;
+
 export default {
   data(){
     return{
@@ -88,14 +91,30 @@ export default {
       }).then((res)=>{
         this.user = res.data.user
         this.message = res.data.message
-        console.log('1',res)
         this.$emit('user',{user:this.user, message:this.message});
         if(this.user){
-          this.email = ''
-          this.password = ''
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          });
+          Toast.fire({
+            icon: 'success',
+            title: 'Login in successfully'
+          });
+
+          location.reload();
+          this.email = '';
+          this.password = '';
         }
       }).catch((error)=>{
-        console.log(error)
+        console.log(error);
       })
     },
   }

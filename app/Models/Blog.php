@@ -13,7 +13,6 @@ class Blog extends Model
     use HasFactory;
 
     public function createBlog($request){
-        
 
         if(!Session::has('loginUser')){
             return ['message' => 'Only admins can create post'];
@@ -22,7 +21,7 @@ class Blog extends Model
         $user = session('loginUser');
 
         $formFields = $request->validate([
-            'img' => 'mimes:jpg,png,jpeg,webp|required',
+            'img' => 'mimes:jpg,png,jpeg,webp,avif|required',
             'title' => 'required',
             'shortDesc' => 'required',
             'description' => 'required',
@@ -46,25 +45,86 @@ class Blog extends Model
             'date_published' => $date,
             'user_id' => $user['id']
         ]);
-        
 
         return $post;
     }
 
+    public function editPost($request, $id){
+        if(!Session::has('loginUser')){
+            return ['message' => 'Only admins can create post'];
+        }
+
+        $formFields = $request->validate([
+            'title' => 'required',
+            'shortDescription' => 'required',
+            'description' => 'required',
+            'type' => 'required|boolean'
+        ]);
+
+        // WITHOUT IMAGE
+
+        if($request->img == 'null' || $request->img == null){
+            DB::table('blogs')->where('id', $id)
+            ->update([
+                'title' => $request->title,
+                'short_description' => $request->shortDescription,
+                'description' => $request->description,
+                'type' => $request->type
+            ]);
+
+            return ['success' => true];
+        }
+
+        // WITH IMAGE
+
+        else{
+            $formFields = $request->validate([
+                'img' => 'mimes:jpg,png,jpeg,webp,avif'
+            ]);
+
+            $file = $request->img;
+            $file_name = time().$file->getClientOriginalName();
+            $file->move(public_path('images'), $file_name);
+
+            DB::table('blogs')->where('id', $id)
+            ->update([
+                'title' => $request->title,
+                'short_description' => $request->shortDescription,
+                'description' => $request->description,
+                'type' => $request->type,
+                'image' => $file_name,
+            ]);
+
+            return ['success' => true];
+        }
+    }
 
     public function fetchPosts(){
         if(Session::has('loginUser')){
-            $posts = DB::table('blogs')->get();
+            $posts = DB::table('users')
+            ->join('blogs', 'users.id', '=', 'blogs.user_id')
+            ->get();
         }
         else{
-            $posts = DB::table('blogs')->whereNull('date_archived')->get();
+            $posts = DB::table('users')->whereNull('date_archived')
+            ->join('blogs', 'users.id', '=', 'blogs.user_id')
+            ->get();
         }
         
         return $posts;
     }
 
+    public function fetchHomePosts(){
+        $posts = DB::table('users')->whereNull('date_archived')
+            ->join('blogs', 'users.id', '=', 'blogs.user_id')
+            ->orderBy('date_created', 'desc')
+            ->limit(4)->get();
+        return $posts;
+    }
+
     public function fetchPost($id){
-        $post = DB::table('blogs')->where('id', $id)->first();
+        $post = DB::table('blogs')->where('id', $id)
+        ->first();
         return $post;
     }
 

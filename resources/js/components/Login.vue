@@ -109,7 +109,9 @@ export default {
             title: 'Login in successfully'
           });
 
-          location.reload();
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
           this.email = '';
           this.password = '';
         }

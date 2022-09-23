@@ -5,12 +5,14 @@
       <label for="validationInput1">Title</label>
       <input type="text" class="form-control is-invalid" id="validationInput1" v-model="title" placeholder="Required example title" required>
       <p class="error-msg" v-if="errors.title">{{errors.title}}</p>
+      <p class="error-msg" v-if="errorsBack['title']">{{errorsBack.title[0]}}</p>
     </div>
 
     <div class="mb-3">
       <label for="validationInput2">Short Description</label>
       <input type="text" class="form-control is-invalid" id="validationInput2" v-model="shortDescription" placeholder="Required example short description" required>
       <p class="error-msg" v-if="errors.shortDescription">{{errors.shortDescription}}</p>
+      <p class="error-msg" v-if="errorsBack['shortDesc']">{{errorsBack.shortDesc[0]}}</p>
     </div>
 
     <div class="mb-3">
@@ -22,6 +24,7 @@
         ref="tested"
       />
       <p class="error-msg" v-if="errors.description">{{errors.description}}</p>
+      <p class="error-msg" v-if="errorsBack['description']">{{errorsBack.description[0]}}</p>
     </div>
 
     <div class="custom-control custom-radio">
@@ -32,6 +35,7 @@
       <input type="radio" class="custom-control-input" id="customControlValidation3" value="1" v-model="type" name="radio-stacked" required>
       <label class="custom-control-label" for="customControlValidation3">Blog</label>
       <p class="error-msg" v-if="errors.type">{{errors.type}}</p>
+      <p class="error-msg" v-if="errorsBack['type']">{{errorsBack.type[0]}}</p>
     </div>
 
     
@@ -41,6 +45,7 @@
       <label class="custom-file-label" for="formFile">Choose file...</label>
       <div class="invalid-feedback">Example invalid custom file feedback</div>
       <p class="error-msg" v-if="errors.image">{{errors.image}}</p>
+      <p class="error-msg" v-if="errorsBack['img']">{{errorsBack.img}}</p>
     </div>
     <button @click="createPost" class="btn btn-light">Add</button>
   </div>
@@ -75,6 +80,7 @@ export default {
         type: false,
         image: false
       },
+      errorsBack:{},
       validate: true
     }
   },
@@ -122,7 +128,6 @@ export default {
         this.errors.image = "This field can't be empty";
       }
 
-      console.log(this.errors)
 
       for(let item in this.errors){
         if(this.errors[item]){
@@ -162,10 +167,15 @@ export default {
           this.description = '';
           this.type = null;
           this.image = null;
-        }, 1800);
+        }, 2000);
       })
       .catch((error) => {
-        console.log(error)
+        if(error.response.status == 422){
+          this.errorsBack = error.response.data.errors;
+        }
+        else{
+          console.log(error);
+        }
       });
     }
   }

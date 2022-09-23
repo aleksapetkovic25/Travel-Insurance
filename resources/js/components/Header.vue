@@ -86,7 +86,7 @@ export default {
     },
     loggedUser(user){
       console.log('asd',user)
-      alert(user.message)
+      // alert(user.message)
       this.user = user.user;
     }
   },

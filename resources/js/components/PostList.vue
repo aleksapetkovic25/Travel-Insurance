@@ -5,6 +5,11 @@
             <img class="img mr-3" :src="'/images/'+post.image" alt="Generic placeholder image">
             <div class="media-body">
                 <h5 class="mt-0">{{post.title}}</h5>
+                <small>Author: {{post.name}}</small>
+                <br>
+                <small v-if="post.type == 1">Blog</small>
+                <small v-if="post.type == 0">News</small>
+                <br>
                 <p class="mt-0">{{post.short_description}}</p>
                 <a class="btn btn-primary" v-if="!user" :href="'/posts/' + post.id" role="button">More</a>
                 <div class="dropdown" v-if="user">
@@ -123,6 +128,7 @@ export default {
     mounted(){
         console.log('mounted user', this.user)
         this.fetchPosts();
+        console.log(this.posts)
         // Swal.fire({
         //     title: 'Error',
         //     text: 'Do you want to continue;',

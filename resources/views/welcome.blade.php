@@ -2,6 +2,6 @@
 @extends('layouts.master')
 
 @section('content')
-    <main-app></main-app>
+    <buying-insurance :posts="{{json_encode($posts)}}"></buying-insurance>
 @endsection
 

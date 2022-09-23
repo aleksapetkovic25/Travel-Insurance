@@ -35,22 +35,7 @@
 
 <script>
 export default {
-    data(){
-        return{
-            insurances: []
-        }
-    },
-    methods:{
-        getInsurances(){
-            axios.get('/api/insurances').then((res)=>{
-                console.log(res)
-                this.insurances = res.data;
-            });
-        }
-    },
-    mounted(){
-        this.getInsurances();
-    }
+    props: ['insurances']
 }
 </script>
 

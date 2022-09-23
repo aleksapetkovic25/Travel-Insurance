@@ -23,10 +23,21 @@ class BlogController extends Controller
         return view('postDetails', ['post' => $post]);
     }
 
-    public function editPost($id){
+    public function fetchHomePosts(){
+        $blog = new Blog();;
+        $posts = $blog->fetchHomePosts();
+        return view('welcome', ['posts' => $posts]);
+    }
+
+    public function editPostData($id){
         $blog = new Blog();
         $post = $blog->fetchPost($id);
         return view('editPost', ['post' => $post]);
+    }
+
+    public function editPost(Request $request, $id){
+        $blog = new Blog();
+        return $post = $blog->editPost($request, $id);
     }
 
     public function deletePost(Request $request){

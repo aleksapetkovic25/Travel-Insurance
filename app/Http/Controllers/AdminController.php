@@ -9,6 +9,7 @@ class AdminController extends Controller
 {
     public function getInsurances(Request $request){
         $admin = new Admin();
-        return $admin->getInsurances($request);
+        $insurances =  $admin->getInsurances($request);
+        return view('admin', ['insurances' => $insurances]);
     }
 }

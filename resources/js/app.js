@@ -12,7 +12,6 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import Hello from './components/Hello';
 import BuyingInsurance from './components/BuyingInsurance';
 import Header from './components/Header';
-import Admin from './admin/Admin';
 import AdminInsurance from './admin/AdminInsurance.vue';
 import Login from './components/Login.vue';
 import Registration from './components/Registration.vue';
@@ -38,7 +37,6 @@ app.component('hello', Hello);
 app.component('login', Login);
 app.component('vue-registration', Registration);
 
-app.component('vue-admin', Admin);
 app.component('admin-insurance', AdminInsurance);
 
 app.component('create-blog', CreateBlog);

@@ -1,9 +1,7 @@
 <template>
     <div class="wrapper">
         <img :src="'/images/' + post.image" class="img img-fluid" alt="Responsive image">
-        <p class="text-justify">Author: {{post.user_id}}</p>
-        <small>{{type}}</small>
-        <p class="text-justify">Date created: {{post.date_created}}</p>
+        <small class="text-justify">Date created: {{dateCreated}}</small>
         <h1>{{post.title}}</h1>
         <p class="text-justify">{{post.short_description}}</p>
         <p class="text-justify" v-html="post.description"></p>
@@ -15,7 +13,7 @@
 export default {
     props:['post'],
     mounted(){
-        console.log(this.post)
+        console.log(new Date(this.post.date_created))
     },
     computed:{
         type(){
@@ -23,8 +21,15 @@ export default {
                 return "Vest";
             }
             return "Blog";
+        },
+        dateCreated(){
+            let d  = new Date(this.post.date_created);
+            let day = d.getDate();
+            let mount = d.getMonth() + 1;
+            let year = d.getFullYear();
+            return `${day}.${mount}.${year}.`;
         }
-    }
+    },
 }
 </script>
 
@@ -37,5 +42,9 @@ export default {
     width: 100%;
     height: 400px;
     object-fit: cover;
+    margin-bottom: 60px;
+}
+h1{
+    margin: 10px 0 50px;
 }
 </style>

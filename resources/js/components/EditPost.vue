@@ -4,11 +4,15 @@
     <div class="mb-3">
       <label for="validationInput1">Title</label>
       <input type="text" class="form-control is-invalid" id="validationInput1" v-model="title" placeholder="Required example title" required>
+      <p class="error-msg" v-if="errors.title">{{errors.title}}</p>
+      <p class="error-msg" v-if="errorsBack['title']">{{errorsBack.title[0]}}</p>
     </div>
 
     <div class="mb-3">
       <label for="validationInput2">Short Description</label>
       <input type="text" class="form-control is-invalid" id="validationInput2" v-model="shortDescription" placeholder="Required example short description" required>
+      <p class="error-msg" v-if="errors.shortDescription">{{errors.shortDescription}}</p>
+      <p class="error-msg" v-if="errorsBack['shortDescription']">{{errorsBack.shortDescription[0]}}</p>
     </div>
 
     <div class="mb-3">
@@ -19,6 +23,8 @@
         contentType="html" 
         ref="content"
       />
+      <p class="error-msg" v-if="errors.description">{{errors.description}}</p>
+      <p class="error-msg" v-if="errorsBack['description']">{{errorsBack.description[0]}}</p>
     </div>
 
     <div class="custom-control custom-radio">
@@ -28,14 +34,13 @@
     <div class="custom-control custom-radio mb-3">
       <input type="radio" class="custom-control-input" id="customControlValidation3" value="1" v-model="type" name="radio-stacked">
       <label class="custom-control-label" for="customControlValidation3">Post</label>
+      <p class="error-msg" v-if="errors.type">{{errors.type}}</p>
+      <p class="error-msg" v-if="errorsBack['type']">{{errorsBack.type[0]}}</p>
     </div>
 
-    
-
     <div class="custom-file">
-      <input type="file" class="custom-file-input" id="formFile" @change="pickFile" required>
+      <input type="file" class="custom-file-input" id="formFile" @change="pickFile">
       <label class="custom-file-label" for="formFile">Choose file...</label>
-      <div class="invalid-feedback">Example invalid custom file feedback</div>
     </div>
     <button @click="editPost" class="btn btn-light">Edit</button>
   </div>
@@ -57,6 +62,7 @@ export default {
     this.title = this.post.title;
     this.shortDescription = this.post.short_description;
     this.type = this.post.type;
+    this.id = this.post.id;
     let d = this.$refs.content;
     d.setContents(this.post.description);
     if(this.post.date_published){
@@ -72,34 +78,103 @@ export default {
       description: '',
       publish: false,
       type: null,
-      image: null
+      image: null,
+      id: null,
+      errors:{
+        title: false,
+        shortDescription: false,
+        description: false,
+        type: false
+      },
+      errorsBack:{},
+      validate: true
     }
   },
   methods:{
+    toastPopUp(title){
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+      });
+
+      Toast.fire({
+          icon: 'success',
+          title: title
+      });
+    },
+    checkValidation(){
+      this.validate = true;
+
+      this.errors.title = false;
+      this.errors.shortDescription = false;
+      this.errors.description = false;
+      this.errors.type = false;
+
+      if(this.title == null || this.title.trim().length === 0){
+        this.errors.title = "This field can't be empty";
+      }
+      if(this.shortDescription == null || this.shortDescription.trim().length === 0){
+        this.errors.shortDescription = "This field can't be empty";
+      }
+      if(this.description == null || this.description.trim().length === 0 || this.description === "<p><br></p>"){
+        this.errors.description = "This field can't be empty";
+      }
+      if(this.type == null){
+        this.errors.type = "This field can't be empty";
+      }
+
+      for(let item in this.errors){
+        if(this.errors[item]){
+          this.validate = false;
+          return;
+        }
+      }
+    },
     pickFile(e){
       this.image = e.target.files[0];
     },
-    createPost(){
+    editPost(){
+      this.checkValidation();
+      if(this.validate === false){
+        return;
+      }
+
       let fd = new FormData();
 
-      fd.append('img', this.image)
-      fd.append('title', this.title)
-      fd.append('shortDesc', this.shortDescription)
-      fd.append('description', this.description)
-      fd.append('publish', this.publish)
-      fd.append('type', this.type)
+      fd.append('img', this.image);
+      fd.append('title', this.title);
+      fd.append('shortDescription', this.shortDescription);
+      fd.append('description', this.description);
+      fd.append('type', this.type);
 
-      axios.post('/create', fd ,{
+      axios.post('/edit/post/' + this.id, fd ,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then((res) => {
-        console.log(res)
+        if(res.data.success === true){
+          this.toastPopUp('Successfuly edited post');
+          setTimeout(() => {
+            window.location.href = '/posts/'+this.id;
+          }, 2000);
+        }
+        console.log(res.data)
         
       }).catch((error) => {
-
-        console.log(error)
-      })
+        if(error.response.status == 422){
+          this.errorsBack = error.response.data.errors;
+        }
+        else{
+          console.log(error);
+        }
+      });
     }
   }
 }
@@ -113,5 +188,7 @@ export default {
   max-width: 80%;
   margin: 60px auto 60px;
 }
-
+.error-msg{
+  color: red;
+}
 </style>

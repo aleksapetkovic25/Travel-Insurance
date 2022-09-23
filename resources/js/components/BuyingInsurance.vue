@@ -5,97 +5,99 @@
                 <div class="row form">
                     <div class="col-sm">
                         <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="Type isurance">Type Insurance</label>
-                                    <select class="form-control" v-model="form.type">
-                                        <option value="0">Individually</option>
-                                        <option value="1">Group</option>
-                                    </select>
-                                    <div class="error-container">
-                                        <p class="error-msg" v-show="errors.type || errorsBack['type']">{{errors.type}} {{errorsBack.type}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="calendars">
-                                        <div class="start-date">
-                                            <label>Start Date</label>
-                                            <Datepicker v-model="form.startDate" autoApply :enableTimePicker="false" :minDate="new Date()" :maxDate="form.endDate"/>
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errors.startDate || errorsBack['startDate']">{{errors.startDate}} {{errorsBack.startDate}}</p>
-                                            </div>
-                                        </div>
-                                        <div class="end-date">
-                                            <label>End Date</label>
-                                            <Datepicker v-model="form.endDate" autoApply :enableTimePicker="false" :minDate="form.startDate"/>
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errors.endDate || errorsBack['endDate']">{{errors.endDate}} {{errorsBack.endDate}}</p>
-                                            </div>
+                            <div class="col-12">
+                                <div class="form-container">
+                                    <div class="form-group">
+                                        <label for="Type isurance">Type Insurance</label>
+                                        <select class="form-control" v-model="form.type">
+                                            <option value="0">Individually</option>
+                                            <option value="1">Group</option>
+                                        </select>
+                                        <div class="error-container">
+                                            <p class="error-msg" v-show="errors.type || errorsBack['type']">{{errors.type}} {{errorsBack.type}}</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="fullname">
-                                        <div class="name">
-                                            <label for="name">Name</label>
-                                            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" v-model="form.name" placeholder="Name...">
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errors.name || errorsBack['carrier.name']">{{errors.name}} {{errorsBack['carrier.name']}}</p>
+                                    <div class="form-group">
+                                        <div class="calendars">
+                                            <div class="start-date">
+                                                <label>Start Date</label>
+                                                <Datepicker v-model="form.startDate" autoApply :enableTimePicker="false" :minDate="new Date()" :maxDate="form.endDate"/>
+                                                <div class="error-container">
+                                                    <p class="error-msg" v-show="errors.startDate || errorsBack['startDate']">{{errors.startDate}} {{errorsBack.startDate}}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="lastname">
-                                            <label for="lastname">Last Name</label>
-                                            <input type="text" class="form-control" id="lastname" v-model="form.lastname" placeholder="Lastname...">
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errors.lastname || errorsBack['carrier.name']">{{errors.lastname}} {{errorsBack['carrier.lastname']}}</p>
+                                            <div class="end-date">
+                                                <label>End Date</label>
+                                                <Datepicker v-model="form.endDate" autoApply :enableTimePicker="false" :minDate="form.startDate"/>
+                                                <div class="error-container">
+                                                    <p class="error-msg" v-show="errors.endDate || errorsBack['endDate']">{{errors.endDate}} {{errorsBack.endDate}}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="number-dob">
-                                        <div class="number">
-                                            <label for="number">Phone number</label>
-                                            <input type="text" class="form-control" v-model="form.number" id="number" placeholder="Number...">
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errors.number || errorsBack['carrier.number']">{{errors.number}} {{errorsBack['carrier.number']}}</p>
-                                            </div>
-                                        </div>
-                                        <div class="dob">
-                                            <label>Date of Birth</label>
-                                            <Datepicker v-model="form.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errors.dateOfBirth || errorsBack['carrier.dateOfBirth']">{{errors.dateOfBirth}} {{errorsBack.dateOfBirth}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group other-participants" v-if="form.type==='1'">
-                                    <h2>Other participants</h2>
                                     <div class="form-group">
                                         <div class="fullname">
                                             <div class="name">
-                                                <label for="name-participant">Name</label>
-                                                <input type="text" class="form-control" id="name-participant" aria-describedby="emailHelp" v-model="otherParticipants.name" placeholder="Name...">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" v-model="form.name" placeholder="Name...">
                                                 <div class="error-container">
-                                                    <p class="error-msg" v-show="errorOther.partName || errorsBack['carrier.name']">{{errorOther.partName}} {{errorsBack['carrier.name']}}</p>
+                                                    <p class="error-msg" v-show="errors.name || errorsBack['carrier.name']">{{errors.name}} {{errorsBack['carrier.name']}}</p>
                                                 </div>
                                             </div>
                                             <div class="lastname">
-                                                <label for="lastname-participant">Last Name</label>
-                                                <input type="text" class="form-control" id="lastname-participant" v-model="otherParticipants.lastname" placeholder="Lastname...">
+                                                <label for="lastname">Last Name</label>
+                                                <input type="text" class="form-control" id="lastname" v-model="form.lastname" placeholder="Lastname...">
                                                 <div class="error-container">
-                                                    <p class="error-msg" v-show="errorOther.partLastname || errorsBack['carrier.name']">{{errorOther.partLastname}} {{errorsBack['carrier.lastname']}}</p>
+                                                    <p class="error-msg" v-show="errors.lastname || errorsBack['carrier.name']">{{errors.lastname}} {{errorsBack['carrier.lastname']}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="dob">
-                                            <label>Date of Birth</label>
-                                            <Datepicker v-model="otherParticipants.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
-                                            <div class="error-container">
-                                                <p class="error-msg" v-show="errorOther.partDateOfBirth || errorsBack['carrier.dateOfBirth']">{{errorOther.partDateOfBirth}} {{errorsBack.dateOfBirth}}</p>
+                                        <div class="number-dob">
+                                            <div class="number">
+                                                <label for="number">Phone number</label>
+                                                <input type="text" class="form-control" v-model="form.number" id="number" placeholder="Number...">
+                                                <div class="error-container">
+                                                    <p class="error-msg" v-show="errors.number || errorsBack['carrier.number']">{{errors.number}} {{errorsBack['carrier.number']}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="dob">
+                                                <label>Date of Birth</label>
+                                                <Datepicker v-model="form.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
+                                                <div class="error-container">
+                                                    <p class="error-msg" v-show="errors.dateOfBirth || errorsBack['carrier.dateOfBirth']">{{errors.dateOfBirth}} {{errorsBack.dateOfBirth}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group other-participants" v-if="form.type==='1'">
+                                        <h2>Other participants</h2>
+                                        <div class="form-group">
+                                            <div class="fullname">
+                                                <div class="name">
+                                                    <label for="name-participant">Name</label>
+                                                    <input type="text" class="form-control" id="name-participant" aria-describedby="emailHelp" v-model="otherParticipants.name" placeholder="Name...">
+                                                    <div class="error-container">
+                                                        <p class="error-msg" v-show="errorOther.partName || errorsBack['carrier.name']">{{errorOther.partName}} {{errorsBack['carrier.name']}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="lastname">
+                                                    <label for="lastname-participant">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastname-participant" v-model="otherParticipants.lastname" placeholder="Lastname...">
+                                                    <div class="error-container">
+                                                        <p class="error-msg" v-show="errorOther.partLastname || errorsBack['carrier.name']">{{errorOther.partLastname}} {{errorsBack['carrier.lastname']}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="dob">
+                                                <label>Date of Birth</label>
+                                                <Datepicker v-model="otherParticipants.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
+                                                <div class="error-container">
+                                                    <p class="error-msg" v-show="errorOther.partDateOfBirth || errorsBack['carrier.dateOfBirth']">{{errorOther.partDateOfBirth}} {{errorsBack.dateOfBirth}}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +106,7 @@
                         </div>
                     </div>
                     <div class="row form-btn">
-                        <div class="col-6">
+                        <div class="col-12">
                             <button v-if="form.type==='1'" @click="addParticipant" class="btn btn-secondary">Add Participant</button>
                             <button @click="addInsurance" class="btn btn-primary">Confirm</button>
                         </div>
@@ -146,6 +148,21 @@
                 </table>
             </div>
         </div>
+        <div class="row posts-container">
+            <div class="col-3 post" v-for="post in posts" :key="post.id">
+                <a :href="'/posts/'+post.id">
+                    <div class="img">
+                        <img class="w-100" :src="'/images/'+post.image" :alt="post.name">
+                    </div>
+                    <div class="title">
+                        <h4>{{post.title}}</h4>
+                    </div>
+                    <div class="short-desc">
+                        <p>{{post.short_description}}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -160,6 +177,7 @@ export default {
         Datepicker,
         Hero
     },
+    props:['posts'],
     data(){
         return{
             num: 0,
@@ -199,6 +217,9 @@ export default {
             validationOther: true,
             participants: [],
         }
+    },
+    mounted(){
+        console.log('propss',this.posts)
     },
     methods:{
         toastPopUp(title){
@@ -399,7 +420,11 @@ export default {
     padding: 60px 0 0;
     margin: 0 auto;
     width: 1170px;
+    max-width: 90%;
     color: #fff;
+}
+.form-container{
+    width: 50%;
 }
 .calendars, .fullname, .number-dob{
     display: flex;
@@ -425,11 +450,50 @@ export default {
     margin-right: 20px;
 }
 .wrapper{
-    max-width: 1270px;
+    width: 1270px;
+    max-width: 90%;
     margin: 0 auto;
 }
-
 .participants{
     margin-top: 50px;
+}
+.posts-container{
+    padding: 80px 0;
+    width: 90%;
+    max-width: 90%;
+    margin: 0 auto;
+}
+.posts-container .img{
+    max-width: 100%;
+    margin: 10px 0;
+}
+.img img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+.post{
+    color: black;
+    text-align: center;
+}
+.post .title{
+    margin: 10px 0;
+    font-size: 18px;
+    height: 70px;
+}
+.post .short-desc{
+    height: 50px;
+    overflow: hidden;
+}
+.post a{
+    display: block;
+    color: #5b4a3b;
+    text-decoration: none;
+    transition: 1s all ease;
+}
+.post a:hover{
+    text-decoration: none;
+    transform: scale(0.95);
+    color: #08536c;
 }
 </style>

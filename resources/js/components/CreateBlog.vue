@@ -29,7 +29,7 @@
 
     <div class="custom-control custom-radio">
       <input type="radio" class="custom-control-input" id="customControlValidation2" value="0" v-model="type" name="radio-stacked" required>
-      <label class="custom-control-label" for="customControlValidation2">Vest</label>
+      <label class="custom-control-label" for="customControlValidation2">News</label>
     </div>
     <div class="custom-control custom-radio mb-3">
       <input type="radio" class="custom-control-input" id="customControlValidation3" value="1" v-model="type" name="radio-stacked" required>
@@ -43,7 +43,6 @@
     <div class="custom-file">
       <input type="file" class="custom-file-input" id="formFile" @change="pickFile" required>
       <label class="custom-file-label" for="formFile">Choose file...</label>
-      <div class="invalid-feedback">Example invalid custom file feedback</div>
       <p class="error-msg" v-if="errors.image">{{errors.image}}</p>
       <p class="error-msg" v-if="errorsBack['img']">{{errorsBack.img}}</p>
     </div>
@@ -85,7 +84,7 @@ export default {
     }
   },
   methods:{
-    toastPopUp(title){
+    toastPopUp(icon, title){
       const Toast = Swal.mixin({
           toast: true,
           position: 'bottom-end',
@@ -99,7 +98,7 @@ export default {
       });
 
       Toast.fire({
-          icon: 'success',
+          icon: icon,
           title: title
       });
     },
@@ -159,15 +158,21 @@ export default {
         }
       })
       .then((res) => {
-        this.toastPopUp('Successfully created post');
-        setTimeout(() => {
-          window.location.href = '/posts/'+res.data;
-          this.title = '';
-          this.shortDescription = '';
-          this.description = '';
-          this.type = null;
-          this.image = null;
-        }, 2000);
+        if(res.data.success === true){
+          this.toastPopUp('success','Successfully created post');
+            setTimeout(() => {
+              window.location.href = '/posts/'+res.data.id;
+              this.title = '';
+              this.shortDescription = '';
+              this.description = '';
+              this.type = null;
+              this.image = null;
+            }, 2000);
+        }
+        else{
+          this.toastPopUp('error','Creation failed');
+        }
+        
       })
       .catch((error) => {
         if(error.response.status == 422){

@@ -1,9 +1,6 @@
 <template>
-<nav class="navbar navbar-expand-lg">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
-    <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand me-2" href="/">
       <img
         src="/assets/logo.png"
         height="16"
@@ -12,25 +9,12 @@
         style="margin-top: -1px;"
         class="logo"
       />
-    </a>
-    <div class="vr"></div>
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarButtonsExample"
-      aria-controls="navbarButtonsExample"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
@@ -50,10 +34,8 @@
           </div>
         </li>
       </ul>
-      <!-- Left links -->
-
       <div class="d-flex align-items-center">
-        <a v-if="!user" href="" class="btn btn-link px-3 me-2" data-toggle="modal" data-target="#modalLoginForm">Login</a>
+        <a v-if="!user" href="" class="btn btn-light" data-toggle="modal" data-target="#modalLoginForm">Login</a>
         <button @click="logout" v-if="user" class="nav-link btn btn-danger">Logout</button>
         <a
           class="btn btn-dark px-3"
@@ -62,12 +44,9 @@
           ><i class="fab fa-github"></i
         ></a>
       </div>
-    </div>
-    <!-- Collapsible wrapper -->
   </div>
-  <!-- Container wrapper -->
-  <login @user="loggedUser"></login>
-</nav>    
+  <login></login>
+</nav>
 </template>
 
 <script>
@@ -103,11 +82,18 @@ export default {
 .navbar{
     background-color: black;
 }
+.navbar-dark .navbar-nav .nav-link{
+  color: white;
+  transition: 0.5s all ease;
+}
+.navbar-dark .navbar-nav .nav-link:hover{
+  color: aquamarine;
+}
 .d-flex{
   margin-left: auto;
 }
 .logo{
-  width: 150px;
+  width: 100px;
   height: auto;
 }
 .nav-link{
@@ -118,6 +104,16 @@ export default {
   color: white;
   border: none;
   padding: 0;
+}
+.dropdown-item:hover{
+  background-color: #007bff;
+}
+.dropdown-menu.show{
+  background-color: #343a40;
+  border: none;
+}
+.dropdown-menu.show .dropdown-item{
+  color: white;
 }
 .vr{
   height: 40px;

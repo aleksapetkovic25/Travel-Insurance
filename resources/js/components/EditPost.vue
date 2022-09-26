@@ -91,7 +91,7 @@ export default {
     }
   },
   methods:{
-    toastPopUp(title){
+    toastPopUp(icon, title){
       const Toast = Swal.mixin({
           toast: true,
           position: 'bottom-end',
@@ -105,7 +105,7 @@ export default {
       });
 
       Toast.fire({
-          icon: 'success',
+          icon: icon,
           title: title
       });
     },
@@ -160,12 +160,14 @@ export default {
         }
       }).then((res) => {
         if(res.data.success === true){
-          this.toastPopUp('Successfuly edited post');
+          this.toastPopUp('success' ,'Successfuly edited post');
           setTimeout(() => {
             window.location.href = '/posts/'+this.id;
           }, 2000);
         }
-        console.log(res.data)
+        else{
+          this.toastPopUp('error', 'Failed modification')
+        }
         
       }).catch((error) => {
         if(error.response.status == 422){

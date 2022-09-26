@@ -1,19 +1,20 @@
 <template>
     <div class="wrapper">
-        <h1>Post List</h1>
-        <div class="media post-container" v-for="post in posts" :key="post.id">
-            <img class="img mr-3" :src="'/images/'+post.image" alt="Generic placeholder image">
-            <div class="media-body">
+        <h1 class="text-center">Post List</h1>
+        <div class="row my-5 post-container" v-for="post in posts" :key="post.id">
+            <div class="col-12 col-md-4 col-lg-3 mb-2 px-0">
+                <img class="img" :src="'/images/'+post.image" alt="Generic placeholder image">
+            </div>
+            <div class="col-12 col-md-8 col-lg-9">
                 <h5 class="mt-0">{{post.title}}</h5>
-                <small>Author: {{post.name}}</small>
-                <br>
-                <small v-if="post.type == 1">Blog</small>
-                <small v-if="post.type == 0">News</small>
-                <br>
+                <p class="my-0"><small>Author: {{post.name}}</small></p>
+                <p class="my-0" v-if="post.type == 1"><small>Blog</small></p>
+                <p class="my-0" v-if="post.type == 0"><small>News</small></p>
+                <hr>
                 <p class="mt-0">{{post.short_description}}</p>
-                <a class="btn btn-primary" v-if="!user" :href="'/posts/' + post.id" role="button">More</a>
+                <a class="btn btn-primary btn-hover" v-if="!user" :href="'/posts/' + post.id" role="button">More</a>
                 <div class="dropdown" v-if="user">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle btn-hover" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dropdown button
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -40,7 +41,7 @@ export default {
         }
     },
     methods:{
-        toastPopUp(title){
+        toastPopUp(icon, title){
             const Toast = Swal.mixin({
             toast: true,
             position: 'bottom-end',
@@ -54,7 +55,7 @@ export default {
           });
 
           Toast.fire({
-            icon: 'success',
+            icon: icon,
             title: title
           });
         },
@@ -76,8 +77,13 @@ export default {
             }).then((res) => {
                 if(res.isConfirmed){
                     axios.delete('/delete/post/' + id, {id: id,}).then((res) => {
-                        this.toastPopUp('Delete is successful.');
-                        this.fetchPosts();
+                        if(res.data.success === true){
+                            this.toastPopUp('success','Delete is successful.');
+                            this.fetchPosts();
+                        }
+                        else{
+                            this.toastPopUp('error', 'Delete failed');
+                        }
                     }).catch((err) => {
                         console.log(err);
                     });
@@ -96,8 +102,13 @@ export default {
             }).then((res) => {
                 if(res.isConfirmed){
                     axios.put('/archive/post/'+id).then((res) => {
-                        this.toastPopUp('Archive is successful.');
-                        this.fetchPosts();
+                        if(res.data.success === true){
+                            this.toastPopUp('success','Archive is successful.');
+                            this.fetchPosts();
+                        }
+                        else{
+                            this.toastPopUp('error', 'Archive failed');
+                        }
                     }).catch((err) => {
                         console.log(err);
                     });;
@@ -116,8 +127,13 @@ export default {
             }).then((res) => {
                 if(res.isConfirmed){
                     axios.put('/publish/post/'+id).then((res) => {
-                        this.toastPopUp('Publish is successful.');
-                        this.fetchPosts();
+                        if(res.data.success === true){
+                            this.toastPopUp('success','Publish is successful.');
+                            this.fetchPosts();
+                        }
+                        else{
+                            this.toastPopUp('error', 'Publish failed');
+                        }
                     }).catch((err) => {
                         console.log(err);
                     });;
@@ -146,23 +162,30 @@ export default {
 
 <style scoped>
 .wrapper{
-    max-width: 80%;
+    max-width: 90%;
     margin: 60px auto;
 }
-.post-container{
-    margin: 40px 0;
-}
 .img{
-    width:300px;
-    max-width: 95%;
-    height: 200px;
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
     object-fit: cover;
 }
 .archived{
     width: 70px;
     height: auto;
-    margin-left: auto;
-    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     font-size: 30px;
 }
+.btn-hover{
+    transition: 0.5s all ease;
+    border: none;
+}
+.post-container:hover .btn-hover{
+    background-color: rgba(127, 255, 212, 0.493);
+    color: rgba(0, 0, 0, 0.678);
+}
+
 </style>

@@ -62,3 +62,4 @@ Route::get('/get/user', [UserController::class, 'getUser']);
 
 
 Route::get('/checkuserlogged', [UserController::class, 'getUser']);
+

@@ -2,6 +2,8 @@
     <div class="wrapper">
         <img :src="'/images/' + post.image" class="img img-fluid" alt="Responsive image">
         <small class="text-justify">Date created: {{dateCreated}}</small>
+        <br>
+        <small class="text-justify">Author: {{post.name}}</small>
         <h1>{{post.title}}</h1>
         <p class="text-justify">{{post.short_description}}</p>
         <p class="text-justify" v-html="post.description"></p>
@@ -14,6 +16,9 @@ export default {
     props:['post'],
     mounted(){
         console.log(new Date(this.post.date_created))
+    },
+    mounted(){
+        console.log(this.post)
     },
     computed:{
         type(){

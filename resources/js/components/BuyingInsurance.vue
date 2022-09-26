@@ -1,161 +1,157 @@
 <template>
-    <div>
+    <div class="">
         <div class="hero">
-            <div class="hero-overlay">
-                <div class="row form">
-                    <div class="col-sm">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-container">
-                                    <div class="form-group">
-                                        <label for="Type isurance">Type Insurance</label>
-                                        <select class="form-control" v-model="form.type">
-                                            <option value="0">Individually</option>
-                                            <option value="1">Group</option>
-                                        </select>
-                                        <div class="error-container">
-                                            <p class="error-msg" v-show="errors.type || errorsBack['type']">{{errors.type}} {{errorsBack.type}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="calendars">
-                                            <div class="start-date">
-                                                <label>Start Date</label>
-                                                <Datepicker v-model="form.startDate" autoApply :enableTimePicker="false" :minDate="new Date()" :maxDate="form.endDate"/>
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errors.startDate || errorsBack['startDate']">{{errors.startDate}} {{errorsBack.startDate}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="end-date">
-                                                <label>End Date</label>
-                                                <Datepicker v-model="form.endDate" autoApply :enableTimePicker="false" :minDate="form.startDate"/>
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errors.endDate || errorsBack['endDate']">{{errors.endDate}} {{errorsBack.endDate}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="fullname">
-                                            <div class="name">
-                                                <label for="name">Name</label>
-                                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" v-model="form.name" placeholder="Name...">
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errors.name || errorsBack['carrier.name']">{{errors.name}} {{errorsBack['carrier.name']}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="lastname">
-                                                <label for="lastname">Last Name</label>
-                                                <input type="text" class="form-control" id="lastname" v-model="form.lastname" placeholder="Lastname...">
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errors.lastname || errorsBack['carrier.name']">{{errors.lastname}} {{errorsBack['carrier.lastname']}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="number-dob">
-                                            <div class="number">
-                                                <label for="number">Phone number</label>
-                                                <input type="text" class="form-control" v-model="form.number" id="number" placeholder="Number...">
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errors.number || errorsBack['carrier.number']">{{errors.number}} {{errorsBack['carrier.number']}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="dob">
-                                                <label>Date of Birth</label>
-                                                <Datepicker v-model="form.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errors.dateOfBirth || errorsBack['carrier.dateOfBirth']">{{errors.dateOfBirth}} {{errorsBack.dateOfBirth}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group other-participants" v-if="form.type==='1'">
-                                        <h2>Other participants</h2>
-                                        <div class="form-group">
-                                            <div class="fullname">
-                                                <div class="name">
-                                                    <label for="name-participant">Name</label>
-                                                    <input type="text" class="form-control" id="name-participant" aria-describedby="emailHelp" v-model="otherParticipants.name" placeholder="Name...">
-                                                    <div class="error-container">
-                                                        <p class="error-msg" v-show="errorOther.partName || errorsBack['carrier.name']">{{errorOther.partName}} {{errorsBack['carrier.name']}}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="lastname">
-                                                    <label for="lastname-participant">Last Name</label>
-                                                    <input type="text" class="form-control" id="lastname-participant" v-model="otherParticipants.lastname" placeholder="Lastname...">
-                                                    <div class="error-container">
-                                                        <p class="error-msg" v-show="errorOther.partLastname || errorsBack['carrier.name']">{{errorOther.partLastname}} {{errorsBack['carrier.lastname']}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="dob">
-                                                <label>Date of Birth</label>
-                                                <Datepicker v-model="otherParticipants.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
-                                                <div class="error-container">
-                                                    <p class="error-msg" v-show="errorOther.partDateOfBirth || errorsBack['carrier.dateOfBirth']">{{errorOther.partDateOfBirth}} {{errorsBack.dateOfBirth}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="hero-overlay px-3 py-5">
+                
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="Type isurance">Type Insurance</label>
+                            <select class="form-control" v-model="form.type">
+                                <option value="0">Individually</option>
+                                <option value="1">Group</option>
+                            </select>
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errors.type || errorsBack['type']">{{errors.type}} {{errorsBack.type}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-md-12 col-lg-6">
+                            <div class="start-date">
+                                <label>Start Date</label>
+                                <Datepicker v-model="form.startDate" autoApply :enableTimePicker="false" :minDate="new Date()" :maxDate="form.endDate"/>
+                                <div class="error-container">
+                                    <p class="error-msg" v-show="errors.startDate || errorsBack['startDate']">{{errors.startDate}} {{errorsBack.startDate}}</p>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <div class="end-date">
+                                <label>End Date</label>
+                                <Datepicker v-model="form.endDate" autoApply :enableTimePicker="false" :minDate="form.startDate"/>
+                                <div class="error-container">
+                                    <p class="error-msg" v-show="errors.endDate || errorsBack['endDate']">{{errors.endDate}} {{errorsBack.endDate}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" v-model="form.name" placeholder="Name...">
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errors.name || errorsBack['carrier.name']">{{errors.name}} {{errorsBack['carrier.name']}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" class="form-control" id="lastname" v-model="form.lastname" placeholder="Lastname...">
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errors.lastname || errorsBack['carrier.name']">{{errors.lastname}} {{errorsBack['carrier.lastname']}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <label for="number">Phone number</label>
+                            <input type="text" class="form-control" v-model="form.number" id="number" placeholder="Number...">
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errors.number || errorsBack['carrier.number']">{{errors.number}} {{errorsBack['carrier.number']}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                             <label>Date of Birth</label>
+                            <Datepicker v-model="form.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errors.dateOfBirth || errorsBack['carrier.dateOfBirth']">{{errors.dateOfBirth}} {{errorsBack.dateOfBirth}}</p>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="row" v-if="form.type==='1'">
+                        <div class="col-12 py-20">
+                            <h3>Other partiipants</h3>
+                        </div>
+                        
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <label for="name-participant">Name</label>
+                            <input type="text" class="form-control" id="name-participant" aria-describedby="emailHelp" v-model="otherParticipants.name" placeholder="Name...">
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errorOther.partName || errorsBack['carrier.name']">{{errorOther.partName}} {{errorsBack['carrier.name']}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <label for="lastname-participant">Last Name</label>
+                            <input type="text" class="form-control" id="lastname-participant" v-model="otherParticipants.lastname" placeholder="Lastname...">
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errorOther.partLastname || errorsBack['carrier.name']">{{errorOther.partLastname}} {{errorsBack['carrier.lastname']}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-lg-6">
+                            <label>Date of Birth</label>
+                            <Datepicker v-model="otherParticipants.dateOfBirth" autoApply :enableTimePicker="false" :maxDate="new Date()" placeholder="Date of Birth"/>
+                            <div class="error-container">
+                                <p class="error-msg" v-show="errorOther.partDateOfBirth || errorsBack['carrier.dateOfBirth']">{{errorOther.partDateOfBirth}} {{errorsBack.dateOfBirth}}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row form-btn">
+
+                    <div class="row">
                         <div class="col-12">
                             <button v-if="form.type==='1'" @click="addParticipant" class="btn btn-secondary">Add Participant</button>
                             <button @click="addInsurance" class="btn btn-primary">Confirm</button>
                         </div>
                     </div>
                 </div>
-                
-        </div><!-- end hero -->
+            </div><!-- end hero -->
         </div>
             
-        <div class="wrapper">
-            <div class="participants" v-if="form.type==='1'">
-                <table class="table">
-                    <caption>List of participanta</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Date of Birth</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(usr, index) in participants" :key="index">
-                            <th scope="row">{{index+1}}</th>
-                            <td>{{usr.name}}</td>
-                            <td>{{usr.lastname}}</td>
-                            <td>{{usr.dateOfBirth}}</td>
-                            <td>
-                                <button @click="deleteParticipant(index)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="container-fluid">
+            <div class="row" v-if="form.type === '1'">
+                <div class="col-12">
+                    <table class="table m-auto">
+                        <caption>List of participanta</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Date of Birth</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(usr, index) in participants" :key="index">
+                                <th scope="row">{{index+1}}</th>
+                                <td>{{usr.name}}</td>
+                                <td>{{usr.lastname}}</td>
+                                <td>{{usr.dateOfBirth}}</td>
+                                <td>
+                                    <button @click="deleteParticipant(index)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="row posts-container">
-            <div class="col-3 post" v-for="post in posts" :key="post.id">
+
+        <div class="row px-5  mx-0">
+            <div class="col-12 col-md-6 col-lg-3 py-5 post" v-for="post in posts" :key="post.id">
                 <a :href="'/posts/'+post.id">
                     <div class="img">
                         <img class="w-100" :src="'/images/'+post.image" :alt="post.name">
                     </div>
-                    <div class="title">
-                        <h4>{{post.title}}</h4>
+                    <div class="col-12">
+                        <h4 class="mt-3">{{post.title}}</h4>
                     </div>
                     <div class="short-desc">
                         <p>{{post.short_description}}</p>
@@ -184,7 +180,7 @@ export default {
             form:{
                 name: '',
                 lastname: '',
-                type: '0',
+                type: 0,
                 number: '',
                 dateOfBirth: null,
                 startDate: null,
@@ -232,7 +228,7 @@ export default {
                 didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
+            }
             });
 
             Toast.fire({
@@ -252,6 +248,7 @@ export default {
             this.errors.dateOfBirth = false;
             this.errors.startDate = false;
             this.errors.endDate = false;
+            
 
             if(this.form.name == null || this.form.name.trim().length === 0){
                 this.errors.name = "This field can't be empty";
@@ -259,7 +256,7 @@ export default {
             if(this.form.lastname == null || this.form.lastname.trim().length === 0){
                 this.errors.lastname = "This field can't be empty";
             }
-            if(this.form.type == null || this.form.type.trim().length === 0){
+            if(this.form.type == null || this.form.type.length === 0){
                 this.errors.type = "This field can't be empty";
             }else if(this.form.type !== '0' && this.form.type !== '1'){
                 this.errors.type = "Not the correct type";
@@ -278,6 +275,7 @@ export default {
             if(this.form.dateOfBirth == null){
                 this.errors.dateOfBirth = "You must select a date of birth";
             }
+
             for(let item in this.errors){
                 if(this.errors[item] != false){
                     this.validation = false;
@@ -322,18 +320,20 @@ export default {
             }).then((res)=> {
                 console.log(res)
                 if(res.status === 200){
-                    this.toastPopUp('Successfully ordered insurance.')
-                    this.type = '0';
-                    this.form.name = '';
-                    this.form.lastname = '';
-                    this.form.number = '';
-                    this.form.dateOfBirth = null;
-                    this.form.startDate = null;
-                    this.form.endDate = null;
-                    this.participants = [];
+                    this.toastPopUp('Successfully ordered insurance.');
+                    setTimeout(() => {
+                        this.form.type = 0;
+                        this.form.name = '';
+                        this.form.lastname = '';
+                        this.form.number = '';
+                        this.form.dateOfBirth = null;
+                        this.form.startDate = null;
+                        this.form.endDate = null;
+                        this.participants = [];
+                    }, 500);
                 }
             }).catch((error)=> {
-                if(error.response.status == 422){
+                if(error.response.status === 422){
                     this.errorsBack = error.response.data.errors;
                 }
                 else{
@@ -387,7 +387,7 @@ export default {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, publish it!'
+                confirmButtonText: 'Yes, delete it!'
             }).then((res) => {
                 if(res.isConfirmed){
                     this.participants.splice(usr,1);
@@ -409,29 +409,12 @@ export default {
  */
 .hero{
     background: url("../../../public/assets/hero.avif") center center / cover;
-    height: 100vh;
+    min-height: 100vh;
 }
 .hero-overlay{
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background-color: #5b4a3b4f;
-}
-.form{
-    padding: 60px 0 0;
-    margin: 0 auto;
-    width: 1170px;
-    max-width: 90%;
-    color: #fff;
-}
-.form-container{
-    width: 50%;
-}
-.calendars, .fullname, .number-dob{
-    display: flex;
-    justify-content: space-between;
-}
-.fullname div, .number-dob div{
-    width: 270px;
 }
 .form-btn{
     margin: 50px auto 0;
@@ -443,29 +426,16 @@ export default {
 .error-msg{
     color: red;
 }
-.dp__main{
-    width: 270px;
-}
 .btn-secondary{
     margin-right: 20px;
 }
 .wrapper{
-    width: 1270px;
+    /* width: 1270px; */
     max-width: 90%;
     margin: 0 auto;
 }
 .participants{
     margin-top: 50px;
-}
-.posts-container{
-    padding: 80px 0;
-    width: 90%;
-    max-width: 90%;
-    margin: 0 auto;
-}
-.posts-container .img{
-    max-width: 100%;
-    margin: 10px 0;
 }
 .img img{
     width: 100%;
@@ -475,11 +445,6 @@ export default {
 .post{
     color: black;
     text-align: center;
-}
-.post .title{
-    margin: 10px 0;
-    font-size: 18px;
-    height: 70px;
 }
 .post .short-desc{
     height: 50px;

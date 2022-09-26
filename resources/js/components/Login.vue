@@ -54,6 +54,24 @@ export default {
     }
   },
   methods:{
+    toastPopUp(icon, title){
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+      });
+
+      Toast.fire({
+          icon: icon,
+          title: title
+      });
+    },
     checkValidation(){
       this.validate = true;
       this.errors.email = false;
@@ -91,30 +109,21 @@ export default {
       }).then((res)=>{
         this.user = res.data.user
         this.message = res.data.message
-        this.$emit('user',{user:this.user, message:this.message});
         if(this.user){
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          });
-          Toast.fire({
-            icon: 'success',
-            title: 'Login in successfully'
-          });
-
+          console.log(res,'1')
+          this.$emit('user',{user:this.user, message:this.message});
+          this.toastPopUp('success', res.data.message);
           setTimeout(() => {
             location.reload();
           }, 2000);
           this.email = '';
           this.password = '';
         }
+        else{
+          console.log('adasd')
+          this.toastPopUp('error', res.data.message);
+        }
+        console.log(res)
       }).catch((error)=>{
         console.log(error);
       })

@@ -66,7 +66,7 @@ class User extends Authenticatable
         // $user = User::create($formFields);
 
 
-        return $newUser;
+        return ['success' => true];
     }
 
     public function login($request){
@@ -84,7 +84,7 @@ class User extends Authenticatable
         if($user){
             if(Hash::check($request->password, $user->password)){
                 $request->session()->put('loginUser', ['id'=>$user->id,'email'=>$user->email,'name'=>$user->name]);
-                return ['user' => $user, 'message' => 'Welcome'];
+                return ['user' => $user, 'message' => 'Successful login'];
             }else{
                 return ['user' => null,'message' => 'Password is not matches.'];
             }

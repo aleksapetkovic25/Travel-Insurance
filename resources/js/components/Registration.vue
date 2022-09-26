@@ -131,7 +131,7 @@ export default {
         this.errors.password = "Password can't be shorter than 5 characters";
       }
       if(this.password !== this.confirmPassword){
-        this.errors.confirmPassword = "Passwords don't matching"
+        this.errors.confirmPassword = "Passwords don't matching";
       }
 
       for(let item in this.errors){
@@ -143,7 +143,7 @@ export default {
     },
     userRegistration(){
       this.checkValidation();
-      console.log(this.validate)
+      console.log(this.validate);
       if(this.validate == false){
         return;
       }
@@ -154,26 +154,32 @@ export default {
         password: this.password,
         confirmPassword: this.confirmPassword
       }).then((res)=>{
-        this.toastPopUp('Successful registration.')
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 2000);
-        
-        if(res.status === 200){
-          this.name = ''
-          this.email = ''
-          this.password = ''
-          this.confirmPassword = ''
+        if(res.data.success === true){
+          this.toastPopUp('Successful registration.')
+          this.name = '';
+          this.email = '';
+          this.password = '';
+          this.confirmPassword = '';
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 2000);
+        }
+        else{
+          this.toastPopUp('error', 'Registration failded')
         }
       }).catch((error)=>{
+        console.log(error.response.data.errors)
         if(error.response.status == 422){
           let err = error.response.data.errors
-          this.errors.name = err['name'][0];
-          this.errors.email = err['email'][0];
-          this.errors.password = err['password'][0];
+          this.errors.name = err['name']['0'];
+          this.errors.email = err['email']['0'];
+          this.errors.password = err['password']['0'];
+          console.log('email',this.errors.email)
         }
-        console.log(err.response.status)
-      })
+        else{    
+          console.log(error.response.status);
+        }
+      });
     }
   }
 }

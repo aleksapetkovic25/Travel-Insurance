@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 class Blog extends Model
@@ -32,6 +33,11 @@ class Blog extends Model
         $file_name = time().$file->getClientOriginalName();
         $file->move(public_path('images'), $file_name);
 
+        // $a = Storage::disk('local')->put($file_name, 'Contents');
+        // echo asset('storage/'.$a);
+        // dd($a);
+
+
         $date = Carbon::now();
 
         $post = DB::table('blogs')
@@ -46,7 +52,7 @@ class Blog extends Model
             'user_id' => $user['id']
         ]);
 
-        return $post;
+        return ['success' => true, 'id' => $post];
     }
 
     public function editPost($request, $id){
@@ -123,7 +129,8 @@ class Blog extends Model
     }
 
     public function fetchPost($id){
-        $post = DB::table('blogs')->where('id', $id)
+        $post = DB::table('users')->where('blogs.id', $id)
+        ->join('blogs', 'users.id', '=', 'blogs.user_id')
         ->first();
         return $post;
     }
@@ -132,8 +139,19 @@ class Blog extends Model
         if(!Session::has('loginUser')){
             return ['message' => 'Only admins can create post'];
         }
+
+        $image = DB::table('blogs')->select('image')
+        ->where('id', $request->id)->first();
+
+        
+        $image_name = $image->image;
+        unlink('images/'.$image_name);
+
         DB::table('blogs')->where('id', $request->id)
         ->delete();
+
+
+        return ['success' => true];
     }
 
     public function archivePost($id){
@@ -148,6 +166,8 @@ class Blog extends Model
             'date_archived' => $date,
             'date_published' => null
         ]);
+
+        return ['success' => true];
     }
 
     public function publishPost($id){
@@ -162,5 +182,7 @@ class Blog extends Model
             'date_archived' => null,
             'date_published' => $date
         ]);
+
+        return ['success' => true];
     }
 }

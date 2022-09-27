@@ -3,7 +3,7 @@
         <h1 class="text-center">Post List</h1>
         <div class="row my-5 post-container" v-for="post in posts" :key="post.id">
             <div class="col-12 col-md-4 col-lg-3 mb-2 px-0">
-                <img class="img" :src="'/images/'+post.image" alt="Generic placeholder image">
+                <img class="img" :src="'/images/'+post.image" :alt="post.title">
             </div>
             <div class="col-12 col-md-8 col-lg-9">
                 <h5 class="mt-0">{{post.title}}</h5>

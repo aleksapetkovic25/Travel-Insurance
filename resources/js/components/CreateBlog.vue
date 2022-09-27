@@ -43,10 +43,11 @@
     <div class="custom-file">
       <input type="file" class="custom-file-input" id="formFile" @change="pickFile" required>
       <label class="custom-file-label" for="formFile">Choose file...</label>
+      <p>{{imgName}}</p>
       <p class="error-msg" v-if="errors.image">{{errors.image}}</p>
       <p class="error-msg" v-if="errorsBack['img']">{{errorsBack.img}}</p>
     </div>
-    <button @click="createPost" class="btn btn-light">Add</button>
+    <button @click="createPost" class="btn btn-light mt-2">Add</button>
   </div>
 </div>
 </template>
@@ -72,6 +73,7 @@ export default {
       description: '',
       type: null,
       image: null,
+      imgName: null,
       errors:{
         title: false,
         shortDescription: false,
@@ -137,6 +139,7 @@ export default {
     },
     pickFile(e){
       this.image = e.target.files[0];
+      this.imgName = this.image.name;
     },
     createPost(){
       this.checkValidation();

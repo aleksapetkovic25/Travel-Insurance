@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 
 class Blog extends Model
 {
@@ -33,9 +35,9 @@ class Blog extends Model
         $file_name = time().$file->getClientOriginalName();
         $file->move(public_path('images'), $file_name);
 
-        // $a = Storage::disk('local')->put($file_name, 'Contents');
-        // echo asset('storage/'.$a);
-        // dd($a);
+        // $destination_path = 'public';
+        // $a = Storage::disk('local')->put($destination_path, $file,);
+        // $a = Str::substr($a,7);
 
 
         $date = Carbon::now();

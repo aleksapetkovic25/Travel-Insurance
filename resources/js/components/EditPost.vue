@@ -41,8 +41,9 @@
     <div class="custom-file">
       <input type="file" class="custom-file-input" id="formFile" @change="pickFile">
       <label class="custom-file-label" for="formFile">Choose file...</label>
+      <p>{{imgName}}</p>
     </div>
-    <button @click="editPost" class="btn btn-light">Edit</button>
+    <button @click="editPost" class="btn btn-light mt-2">Edit</button>
   </div>
 </div>
 </template>
@@ -79,6 +80,7 @@ export default {
       publish: false,
       type: null,
       image: null,
+      imgName: null,
       id: null,
       errors:{
         title: false,
@@ -139,6 +141,7 @@ export default {
     },
     pickFile(e){
       this.image = e.target.files[0];
+      this.imgName = this.image.name;
     },
     editPost(){
       this.checkValidation();

@@ -20152,6 +20152,7 @@ __webpack_require__.r(__webpack_exports__);
       description: '',
       type: null,
       image: null,
+      imgName: null,
       errors: {
         title: false,
         shortDescription: false,
@@ -20218,6 +20219,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     pickFile: function pickFile(e) {
       this.image = e.target.files[0];
+      this.imgName = this.image.name;
     },
     createPost: function createPost() {
       var _this = this;
@@ -20309,6 +20311,7 @@ __webpack_require__.r(__webpack_exports__);
       publish: false,
       type: null,
       image: null,
+      imgName: null,
       id: null,
       errors: {
         title: false,
@@ -20370,6 +20373,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     pickFile: function pickFile(e) {
       this.image = e.target.files[0];
+      this.imgName = this.image.name;
     },
     editPost: function editPost() {
       var _this = this;
@@ -21825,7 +21829,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     required: ""
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), _hoisted_22, $data.errors.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.image), 1
+  ), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.imgName), 1
+  /* TEXT */
+  ), $data.errors.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.image), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errorsBack['img'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errorsBack.img), 1
   /* TEXT */
@@ -21833,7 +21839,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[6] || (_cache[6] = function () {
       return $options.createPost && $options.createPost.apply($options, arguments);
     }),
-    "class": "btn btn-light"
+    "class": "btn btn-light mt-2"
   }, "Add")])]);
 }
 
@@ -22054,11 +22060,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), _hoisted_22]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.imgName), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[6] || (_cache[6] = function () {
       return $options.editPost && $options.editPost.apply($options, arguments);
     }),
-    "class": "btn btn-light"
+    "class": "btn btn-light mt-2"
   }, "Edit")])]);
 }
 
@@ -22654,7 +22662,7 @@ var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_3 = {
   "class": "col-12 col-md-4 col-lg-3 mb-2 px-0"
 };
-var _hoisted_4 = ["src"];
+var _hoisted_4 = ["src", "alt"];
 var _hoisted_5 = {
   "class": "col-12 col-md-8 col-lg-9"
 };
@@ -22748,7 +22756,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       "class": "img",
       src: '/images/' + post.image,
-      alt: "Generic placeholder image"
+      alt: post.title
     }, null, 8
     /* PROPS */
     , _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(post.title), 1
